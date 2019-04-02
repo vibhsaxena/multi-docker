@@ -13,3 +13,10 @@ after_success:
   - docker build -t grothfuss/multi-nginx ./nginx
   - docker build -t grothfuss/multi-server ./server
   - docker build -t grothfuss/multi-worker ./worker
+  #log into Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #take these images and push these into Docker
+  - docker push grothfuss/multi-client
+  - docker push grothfuss/multi-nginx
+  - docker push grothfuss/multi-server
+  - docker push grothfuss/multi-worker
