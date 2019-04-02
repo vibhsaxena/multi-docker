@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t grothfuss/react-test -f ./client/Dockerfile.dev ./client 
+
+script:
+  - docker run grothfuss/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t grothfuss/multi-client ./client 
+  - docker build -t grothfuss/multi-nginx ./nginx
+  - docker build -t grothfuss/multi-server ./server
+  - docker build -t grothfuss/multi-worker ./worker
